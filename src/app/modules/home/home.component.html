@@ -1,0 +1,38 @@
+<div class="flex flex-col justify-between">
+  <div class="min-h-[100vh]">
+    <div class="font-bold text-2xl text-center mt-4">All Blogs</div>
+    <div class="flex justify-between px-7 font-bold text-gray-700 mt-8">
+      <div>
+        Total blogs: {{blogs.length}}
+      </div>
+      <div>Page number: {{pages}}</div>
+    </div>
+
+    <div class="flex flex-col h-full mt-8 items-center justify-center" *ngIf="blogs.length === 0; else showBlogs">
+      No blogs to show
+    </div>
+
+    <ng-template #showBlogs>
+      <div class="grid lg:grid-cols-3 md:grid-cols-2 grid-col-1 gap-4">
+        <app-blog-card *ngFor="let blog of blogs;" [blog]="blog"></app-blog-card>
+      </div>
+    </ng-template>
+
+    <div class="fixed left-[43%] md:left-[91%] bottom-[61px] cursor-pointer ">
+      <app-icon (buttonClick)="handleButtonClick()" [iconClass]="'bi-plus-circle-fill'"
+        [extraClasses]="iconExtraClasses"></app-icon>
+    </div>
+
+  </div>
+  <div class="flex justify-between md:justify-center gap-5 p-10">
+    <button [disabled]="pages<=1" (click)="loadMore(true)"
+      [classList]="'border-2 p-1 w-[80px] rounded-md font-bold '+previousExtraClass">
+      Previous
+    </button>
+    <button (click)="loadMore()"
+      [classList]="'border-2 p-1 w-[80px] rounded-md font-bold '+nextExtraClasses"
+      [disabled]="totalPage === pages">
+      Next
+    </button>
+  </div>
+</div>

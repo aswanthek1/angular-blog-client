@@ -1,0 +1,43 @@
+<form 
+  class="flex gap-8 p-8 md:flex-row flex-col"
+  [formGroup]="blogForm"
+  (ngSubmit)="$event.preventDefault(); submitBlogForm()"
+>
+    <div class=" flex-row flex gap-2 md:flex-col w-24  ">
+      <div
+        class="cursor-pointer"
+      >
+      <a routerLink="">
+        <app-icon [iconClass]="'bi-house-door-fill'" ></app-icon>
+      </a>
+      </div>
+        <button type="submit">
+            <app-icon [iconClass]="'bi-bookmark-check-fill'" ></app-icon>
+        </button>
+    </div>
+    <div class=" flex items-center flex-col  border-4 w-full h-full p-4 gap-10">
+      <input
+        name="title"
+        class="text-2xl text-center focus:outline-none w-full"
+        placeholder="Title..."
+        formControlName="tittle"
+      />
+      <hr />
+      <textarea
+        formControlName="content"
+        id=""
+        placeholder="Type about the topic..."
+        class="w-full p-4 h-[350px] focus:outline-none resize-none"
+      ></textarea>
+      <div class="flex justify-start w-full">
+        <input
+          class="focus:outline-none pl-4"
+          placeholder="Enter your name here ..."
+          type="text"
+          formControlName="author"
+          id=""
+        />
+      </div>
+    </div>
+    <!-- <Toaster /> -->
+  </form>

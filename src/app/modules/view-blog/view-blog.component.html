@@ -1,0 +1,20 @@
+<div class="flex md:flex-row flex-col mt-7 px-6 md:px-14 py-6 gap-9">
+    <div
+        class="fixed cursor-pointer"
+        >
+        <a routerLink="">
+            <app-icon [iconClass]="'bi-house-door-fill'" ></app-icon>
+        </a>
+    </div>
+    <div class="flex flex-col gap-16 px-6 md:px-36 w-full ">
+        <h1 class="text-center text-4xl font-bold text-red-400 ">
+           {{blog.tittle}}
+        </h1>
+        <p class=" font-serif text-justify text-[20px] text-[#767676] ">
+            {{blog.content}}
+        </p>
+        <h1 class="text-2xl font-bold text-red-400">
+            By: {{blog.author}}
+        </h1>
+    </div>
+</div>
