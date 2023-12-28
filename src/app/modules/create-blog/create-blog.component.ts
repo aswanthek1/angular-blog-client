@@ -38,15 +38,15 @@ export class CreateBlogComponent {
       return;
     }
     if(this.blogForm.valid) {
-      this.blogService.addBlog(formData).subscribe(
-        (data:any) => {
+      this.blogService.addBlog(formData).subscribe({
+        next:(data:any) => {
           this.blogForm.setValue({tittle:'', content:'', author:""})
           alert('Blog Added Successfully!')
         },
-        (error:any) => {
+        error:(error:any) => {
           alert(error.message)
         }
-      )
+      })
     }
   }
 

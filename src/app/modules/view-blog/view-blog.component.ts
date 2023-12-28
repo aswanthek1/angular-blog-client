@@ -27,8 +27,8 @@ export class ViewBlogComponent implements OnInit {
   blog!:Blogs;
 
   getBlogById(id:string) {
-    this.blogService.getBlogById(id).subscribe(
-      (data:any) => {
+    this.blogService.getBlogById(id).subscribe({
+      next:(data:any) => {
         if(data) {
           this.blog = data
         }
@@ -36,10 +36,10 @@ export class ViewBlogComponent implements OnInit {
           this.router.navigate(['not-found'])
         }
       },
-      (error:any) => {
+      error:(error:any) => {
         this.router.navigate(['not-found'])
         alert(error.message)
       }
-    )
+    })
   }
 }

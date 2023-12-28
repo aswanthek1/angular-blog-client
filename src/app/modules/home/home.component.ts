@@ -29,8 +29,8 @@ export class HomeComponent implements OnInit {
   nextExtraClasses:string = 'bg-slate-300'
 
   getAllBlogs(pages:number, limit:number) {
-    this.blogService.getBlogs(pages, limit).subscribe(
-      (data:any) => {
+    this.blogService.getBlogs(pages, limit).subscribe({
+      next:(data:any) => {
         this.blogs = data.data;
         this.count = data.count;
         this.totalPage = data.totalPage;
@@ -47,10 +47,10 @@ export class HomeComponent implements OnInit {
           this.nextExtraClasses = 'bg-slate-300'
         }
       },
-      (error:any) => {
+      error:(error:any) => {
         alert(error.message)
       }
-    )
+    })
   }
 
   loadMore(decrease:boolean = false) {
