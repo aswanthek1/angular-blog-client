@@ -5,11 +5,12 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { BlogService } from '../../core/services/blog-service/blog-service.service';
 import { Blogs } from '../../shared/models/blogModel';
 import { RouterModule, RouterOutlet } from '@angular/router';
+import { LoaderComponent } from '../../shared/components/loader/loader.component';
 
 @Component({
   selector: 'app-create-blog',
   standalone: true,
-  imports: [IconComponent, CommonModule, ReactiveFormsModule, RouterOutlet, RouterModule],
+  imports: [IconComponent, CommonModule, ReactiveFormsModule, RouterOutlet, RouterModule, LoaderComponent],
   templateUrl: './create-blog.component.html',
   styleUrl: './create-blog.component.css'
 })
@@ -22,6 +23,8 @@ export class CreateBlogComponent {
     content: new FormControl('', [Validators.required, Validators.minLength(10)]),
     author: new FormControl('', [Validators.required, Validators.minLength(2)])
   })
+
+  loading:boolean = false;
 
   submitBlogForm() {
     const formData = this.blogForm.value;
@@ -38,13 +41,19 @@ export class CreateBlogComponent {
       return;
     }
     if(this.blogForm.valid) {
+      this.loading = true;
       this.blogService.addBlog(formData).subscribe({
         next:(data:any) => {
           this.blogForm.setValue({tittle:'', content:'', author:""})
+          this.loading = false;
           alert('Blog Added Successfully!')
         },
         error:(error:any) => {
+          this.loading = false;
           alert(error.message)
+        },
+        complete:() => {
+          this.loading = false
         }
       })
     }

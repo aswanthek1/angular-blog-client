@@ -1,9 +1,11 @@
+<app-loader *ngIf="loading; else showForm" ></app-loader>
+<ng-template #showForm>
 <form 
   class="flex gap-8 p-8 md:flex-row flex-col"
   [formGroup]="blogForm"
   (ngSubmit)="$event.preventDefault(); submitBlogForm()"
 >
-    <div class=" flex-row flex gap-2 md:flex-col w-24  ">
+    <div class=" flex-row flex gap-2 md:flex-col w-24 items-start ">
       <div
         class="cursor-pointer"
       >
@@ -41,3 +43,4 @@
     </div>
     <!-- <Toaster /> -->
   </form>
+</ng-template>

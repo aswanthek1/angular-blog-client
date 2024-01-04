@@ -32,7 +32,7 @@ export class BlogService {
     return throwError(() => new Error('Cannot retriev blogs. Please try again'))
   }
 
-  getBlogs(page:number, limit:number) {
+  getBlogs(page:number, limit:number) : Observable<any> {
     let options = this.getStandardOptions()
     options.params = new HttpParams({///for adding query params
       fromObject: {
