@@ -1,0 +1,45 @@
+<app-loader *ngIf="blogs.loading === true; else showPage"></app-loader>
+<ng-template #showPage>
+<div class="flex flex-col justify-between">
+  <div class="min-h-[100vh]">
+    <div class="font-bold text-2xl text-center mt-4">All Blogs</div>
+    <div class="flex justify-between px-7 font-bold text-gray-700 mt-8">
+      <div>
+        Total blogs: {{blogs.count}}
+      </div>
+      <!-- <div>Page number: {{pages}}</div> -->
+    </div>
+
+    <div class="flex flex-col h-full mt-8 items-center justify-center" *ngIf="!blogs.blogs.length; else showBlogs">
+      No blogs to show
+    </div>
+
+    <ng-template #showBlogs>
+      <div class="grid lg:grid-cols-3 md:grid-cols-2 grid-col-1 gap-4">
+        <app-blog-card *ngFor="let blog of blogs.blogs;" [blog]="blog"></app-blog-card>
+      </div>
+      <div class="flex justify-center gap-5 p-10">
+        <app-icon 
+          [isDisabled]="pages<=1"
+          (buttonClick)="loadMore(true)" 
+          [iconClass]="'bi-caret-left-fill bg-transparent'" 
+          [extraClasses]="'rounded-full flex items-center py-1 px-2 '+previousExtraClass"
+        ></app-icon>
+        <p class="bg-slate-200 text-xl rounded-full font-bold py-1 px-3 " >{{pages}}</p>
+        <app-icon 
+          [isDisabled]="blogs.totalPage === pages"
+          (buttonClick)="loadMore()" 
+          [iconClass]="'bi-caret-right-fill bg-transparent'" 
+          [extraClasses]="'rounded-full flex items-center py-1 px-2 '+nextExtraClasses"
+        ></app-icon>
+      </div>
+    </ng-template>
+
+    <div class="fixed left-[80%] md:left-[91%] bottom-[85px] md:bottom-[61px] cursor-pointer ">
+      <app-icon (buttonClick)="handleButtonClick()" [iconClass]="'bi-plus-circle-fill'"
+        [extraClasses]="iconExtraClasses"></app-icon>
+    </div>
+
+  </div>
+</div>
+</ng-template>

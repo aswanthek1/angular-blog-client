@@ -1,0 +1,12 @@
+<app-auth-container [formTitle]="'Register'" [formGroupData]="authorForm" (formSubmitted)="onUserSubmitted()">
+    <app-input [control]="authorForm.controls.name" [label]="'Enter your fullname'"></app-input>
+    <app-input [control]="authorForm.controls.email" [label]="'Enter your email'"></app-input>
+    <app-input [type]="'password'" [control]="authorForm.controls.password" [label]="'Password'"></app-input>
+    <app-button [type]="'submit'" [text]="'Submit'"></app-button>
+    <div class="flex justify-start items-center gap-3">
+        <p class="font-semibold text-lg">
+            Allready have an account?
+        </p>
+        <a class="text-blue-500 font-bold text-lg hover:underline" routerLink="/login">Login</a>
+    </div>
+</app-auth-container>
