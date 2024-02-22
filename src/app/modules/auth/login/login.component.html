@@ -1,11 +1,15 @@
-<app-auth-container [formTitle]="'Login'" [formGroupData]="authorForm" (formSubmitted)="onUserSubmitted()">
-    <app-input [control]="authorForm.controls.email" [label]="'Enter your email'"></app-input>
-    <app-input [control]="authorForm.controls.password" [label]="'Password'"></app-input>
-    <app-button [type]="'submit'" [text]="'Submit'"></app-button>
-    <div class="flex justify-start items-center gap-3">
-        <p class="font-semibold text-lg">
-            Not registerd yet?
-        </p>
-        <a class="text-blue-500 font-bold text-lg hover:underline" routerLink="/register">Signup</a>
-    </div>
-</app-auth-container>
+<app-loader *ngIf="loading; else showPage"></app-loader>
+
+<ng-template #showPage>
+    <app-auth-container [formTitle]="'Login'" [formGroupData]="authorForm" (formSubmitted)="onUserSubmitted()">
+        <app-input [control]="authorForm.controls.email" [label]="'Enter your email'"></app-input>
+        <app-input [control]="authorForm.controls.password" [label]="'Password'"></app-input>
+        <app-button [type]="'submit'" [text]="'Submit'"></app-button>
+        <div class="flex justify-start items-center gap-3">
+            <p class="font-semibold text-lg">
+                Not registerd yet?
+            </p>
+            <a class="text-blue-500 font-bold text-lg hover:underline" routerLink="/register">Signup</a>
+        </div>
+    </app-auth-container>
+</ng-template>

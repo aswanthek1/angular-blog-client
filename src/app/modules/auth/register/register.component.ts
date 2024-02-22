@@ -6,11 +6,12 @@ import { ButtonComponent } from '../../../shared/components/button/button.compon
 import { CommonModule } from '@angular/common';
 import { InputComponent } from '../../../shared/components/input/input.component';
 import { AuthorService } from '../../../core/services/author-service/author.service';
+import { LoaderComponent } from '../../../shared/components/loader/loader.component';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [InputComponent, CommonModule, FormsModule, ButtonComponent, AuthContainerComponent, ReactiveFormsModule, RouterModule],
+  imports: [InputComponent, CommonModule, FormsModule, ButtonComponent, AuthContainerComponent, ReactiveFormsModule, RouterModule, LoaderComponent],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
 })
@@ -21,6 +22,8 @@ export class RegisterComponent {
     password: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(20)]),
   })
 
+  loading:boolean = false
+
   router: Router = inject(Router)
   authorService: AuthorService = inject(AuthorService)
 
@@ -28,6 +31,7 @@ export class RegisterComponent {
     if(this.authorForm.valid) {
       const authorData = this.authorForm.value;
       console.log(authorData, 'authordata')
+      this.loading = true
       this.authorService.register(authorData).subscribe({
         next:(data) => {
           this.authorForm.setValue({name:'', email: '', password: ''})
@@ -36,6 +40,9 @@ export class RegisterComponent {
         },
         error:(error) => {
           alert(error.error.message)
+        },
+        complete:() => {
+          this.loading = false
         }
       })
     }

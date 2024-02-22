@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { API_BASE_URL } from '../../base-url/base-url';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Author } from '../../../shared/models/authorModel';
-import { Observable, catchError, throwError } from 'rxjs';
+import { Observable, catchError, map, throwError } from 'rxjs';
 
 const URL = `${API_BASE_URL}/author/`
 
@@ -11,6 +11,16 @@ const URL = `${API_BASE_URL}/author/`
 })
 export class AuthorService {
   constructor(private http: HttpClient) { }
+
+  private getStandardOptions() : any {
+    const token = localStorage.getItem('token')
+    return {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': `${token}`
+      })
+    }
+  }
 
   // private handleError(error:any) {
   //   if(error.status === 0) {
@@ -26,5 +36,14 @@ export class AuthorService {
 
   register(data: any): Observable<any> {
     return this.http.post(`${URL}register`, data)
+  }
+
+  login(data: any): Observable<any> {
+    return this.http.post(`${URL}login`, data)
+  }
+
+  authenticate() {
+    const options = this.getStandardOptions()
+    return this.http.get(`${URL}authenticate`, options)
   }
 }
