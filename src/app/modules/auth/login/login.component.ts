@@ -37,13 +37,14 @@ export class LoginComponent {
     this.authorService.login(authorData).subscribe({
       next:(data) => {
         this.authorForm.setValue({email:null, password: null})
-        alert("Registerd Successfully!")
+        alert("Logged in Successfully!")
         console.log(data, ';loggedin')
         localStorage.setItem('token', data?.accessToken)
         this.router.navigate(['blogs'])
       },
       error:(error) => {
         alert(error.error.message)
+        this.loading = false
       },
       complete:() => {
         this.loading = false

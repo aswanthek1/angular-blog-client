@@ -14,7 +14,7 @@ export const routes: Routes = [
     {path:'register', title:'Signup', component:RegisterComponent, canActivate:[canActivatePublicRoutes]},
     {path:'blogs', title:'Blogs', component:BlogsComponent},
     {path:'create', title:'Create', component:CreateBlogComponent, canActivate:[canActivate]},
-    {path:'blog/:id', title:'Blog', component:ViewBlogComponent,canActivate:[canActivate], resolve:{blog:resolve}},
+    {path:'blog/:id', title:'Blog', component:ViewBlogComponent, resolve:{blog:resolve}},
     {path:'not-found', title:'Not-Found', component:NotFoundComponent},
     {path:'**', title:'Not-Found', component:NotFoundComponent},
 ];

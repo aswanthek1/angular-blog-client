@@ -21,7 +21,7 @@ export class CreateBlogComponent {
   blogForm = new FormGroup({
     tittle: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(30)]),
     content: new FormControl('', [Validators.required, Validators.minLength(10)]),
-    author: new FormControl('', [Validators.required, Validators.minLength(2)])
+    // author: new FormControl('', [Validators.required, Validators.minLength(2)])
   })
 
   loading:boolean = false;
@@ -36,15 +36,15 @@ export class CreateBlogComponent {
       alert('Content is required and need minimum 10 chars')
       return;
     }
-    if(this.blogForm.get('author')?.hasError('required') || this.blogForm.get('author')?.hasError('minlength')) {
-      alert('Author is required and need minimum 2 chars')
-      return;
-    }
+    // if(this.blogForm.get('author')?.hasError('required') || this.blogForm.get('author')?.hasError('minlength')) {
+    //   alert('Author is required and need minimum 2 chars')
+    //   return;
+    // }
     if(this.blogForm.valid) {
       this.loading = true;
       this.blogService.addBlog(formData).subscribe({
         next:(data:any) => {
-          this.blogForm.setValue({tittle:'', content:'', author:""})
+          this.blogForm.setValue({tittle:'', content:''})
           this.loading = false;
           alert('Blog Added Successfully!')
         },

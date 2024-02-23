@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { IconComponent } from '../../shared/components/icon/icon.component';
 import { Blogs } from '../../shared/models/blogModel';
 import { ActivatedRoute, ParamMap, Router, RouterModule, RouterOutlet } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-view-blog',
   standalone: true,
-  imports: [IconComponent, RouterOutlet, RouterModule],
+  imports: [IconComponent, RouterOutlet, RouterModule, CommonModule],
   templateUrl: './view-blog.component.html',
   styleUrl: './view-blog.component.css'
 })
@@ -26,6 +27,7 @@ export class ViewBlogComponent implements OnInit {
 
     // Here we are fetching data before navigating to this page using resolve guard. So we are not calling any api here
     const items = this.route.snapshot.data['blog']
+    console.log(items, 'lkj')
     if(!items) {
       this.router.navigate(['not-found'])
     }

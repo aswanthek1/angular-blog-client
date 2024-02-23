@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { API_BASE_URL } from '../../base-url/base-url';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Observable, catchError, throwError } from 'rxjs';
+import { HttpClient, HttpEvent, HttpHeaders, HttpParams } from '@angular/common/http';
+import { Observable, catchError, of, throwError } from 'rxjs';
 import { Blogs } from '../../../shared/models/blogModel';
 
 const URL = `${API_BASE_URL}/blog`
@@ -13,11 +13,17 @@ export class BlogService {
 
   constructor(private http: HttpClient) { }
 
-  private getStandardOptions() : any {
+  private getStandardOptions(withToken:boolean = false) : any {
+    const token:string|null = localStorage.getItem('token')
+    let headerValue:any = {'Content-Type': 'application/json'}
+    if(withToken && token) {
+      headerValue = {
+        'Content-Type': 'application/json',
+        'Authorization': token
+      }
+    }
     return {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json'
-      })
+      headers: new HttpHeaders(headerValue)
     }
   }
 
@@ -29,7 +35,8 @@ export class BlogService {
       console.error('Server side error: ', error.error)
     }
 
-    return throwError(() => new Error('Cannot retriev blogs. Please try again'))
+    // return throwError(() => new Error('Cannot retriev blogs. Please try again'))
+    return of(error);
   }
 
   getBlogs(page:number, limit:number) : Observable<any> {
@@ -43,10 +50,11 @@ export class BlogService {
   }
 
   addBlog(blog:any): Observable<any> {
-    return this.http.post<any>(`${URL}/addBlog`, blog).pipe(catchError(this.handleError))
+    const options = this.getStandardOptions(true)
+    return this.http.post<any>(`${URL}/addBlog`, blog, options).pipe(catchError(this.handleError))
   }
 
-  getBlogById(id:string): Observable<Blogs> {
+  getBlogById(id:string){
     return this.http.get<Blogs>(`${URL}/getBlog/${id}`).pipe(catchError(this.handleError))
   }
 }
