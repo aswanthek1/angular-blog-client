@@ -14,6 +14,7 @@ export class IconComponent {
   @Input() extraClasses:any;
   @Input() iconClass:string = '';
   @Input() isDisabled:boolean = false;
+  @Input() bttonType:string = 'button';
   @Output() buttonClick  = new EventEmitter<void>()
   handleIconClicked():void {
     this.buttonClick.emit()

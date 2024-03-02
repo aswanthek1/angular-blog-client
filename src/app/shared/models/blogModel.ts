@@ -7,4 +7,5 @@ export class Blogs {
     author!:Author;
     updatedAt?:any;
     createdAt?:any;
+    image!:string;
 }

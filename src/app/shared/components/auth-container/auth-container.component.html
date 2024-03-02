@@ -1,6 +1,18 @@
-<form [formGroup]="formGroupData" (ngSubmit)="$event.preventDefault(); onFormSubmit()" class="min-h-full flex flex-col items-center gap-10 py-10 px-7 sm:px-10 md:px-20 relative">
-    <div class="flex flex-col gap-3 w-full md:w-[80%] lg:w-[60%] mx-auto">
-        <h2 class="text-4xl font-bold w-full text-center mb-10" >{{formTitle}}</h2>
-        <ng-content></ng-content>
+<form [formGroup]="formGroupData" (ngSubmit)="$event.preventDefault(); onFormSubmit()"
+    [classList]="extraContainerClass">
+
+    <div *ngIf="needContainer; else showChildren" class="flex flex-col gap-3 w-full md:w-[80%] lg:w-[60%] mx-auto">
+        <h2 class="text-4xl font-bold w-full text-center mb-10" *ngIf="formTitle">{{formTitle}}</h2>
+        <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
     </div>
+
+    <ng-template #showChildren>
+        <ng-container *ngTemplateOutlet="contentTemplate"></ng-container>
+    </ng-template>
+
+    <ng-template #contentTemplate>
+        <!-- This is a placeholder for your ng-content -->
+        <ng-content></ng-content>
+    </ng-template>
+
 </form>

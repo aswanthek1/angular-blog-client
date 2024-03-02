@@ -5,3 +5,18 @@
 textarea:focus, input:focus{
     outline: none;
 }
+
+.blur-rgba-black {
+    background-color: rgba(43, 41, 41, 0.3);
+    backdrop-filter: blur(1px);
+}
+
+.custom-icon-font {
+  font-size: 2rem !important;
+}
+.custom-icon-font2 {
+  font-size: 3rem !important;
+  font-weight: 800;
+}
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

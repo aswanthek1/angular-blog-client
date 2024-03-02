@@ -2,11 +2,12 @@ import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Event, NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router, RouterModule, RouterOutlet } from '@angular/router';
 import { LoaderComponent } from './shared/components/loader/loader.component';
+import { NavBarComponent } from './shared/components/nav-bar/nav-bar.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, RouterModule, LoaderComponent],
+  imports: [CommonModule, RouterOutlet, RouterModule, LoaderComponent, NavBarComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

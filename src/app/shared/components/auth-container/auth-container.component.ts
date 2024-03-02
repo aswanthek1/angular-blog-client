@@ -12,6 +12,8 @@ import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 export class AuthContainerComponent {
   @Input() formGroupData:FormGroup = new FormGroup({})
   @Input() formTitle:string = ''
+  @Input() extraContainerClass:string = 'min-h-full flex flex-col items-center gap-10 py-10 px-7 sm:px-10 md:px-20 relative'
+  @Input() needContainer:boolean = true
 
   @Output() formSubmitted = new EventEmitter<void>()
   onFormSubmit() {

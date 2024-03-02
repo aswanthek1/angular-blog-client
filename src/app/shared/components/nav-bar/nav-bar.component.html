@@ -1,0 +1,10 @@
+<div class='bg-slate-200 h-20 md:text-left md:px-8 py-5 text-center flex justify-between '>
+    <app-icon class="rotate-180 block md:hidden" routerLink="" [iconClass]="'bi-paragraph custom-icon-font2'"></app-icon>
+    <a class="decoration-0 font-bold text-4xl hidden md:block" routerLink="">BreifIt</a>
+    <app-icon [iconClass]="'bi-person-circle custom-icon-font'" mat-button [matMenuTriggerFor]="menu"></app-icon>
+    <mat-menu #menu="matMenu">
+        <button routerLink="/login" mat-menu-item>Login</button>
+        <button (click)="handleLogout()" mat-menu-item>Logout</button>
+        <button mat-menu-item>Profile</button>
+    </mat-menu>
+</div>

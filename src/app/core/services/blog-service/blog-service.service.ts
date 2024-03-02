@@ -13,13 +13,16 @@ export class BlogService {
 
   constructor(private http: HttpClient) { }
 
-  private getStandardOptions(withToken:boolean = false) : any {
+  private getStandardOptions(withToken:boolean = false, needContentType:boolean = true, contentType:string = 'application/json') : any {
     const token:string|null = localStorage.getItem('token')
-    let headerValue:any = {'Content-Type': 'application/json'}
+    let headerValue:any = {'Content-Type': contentType}
     if(withToken && token) {
       headerValue = {
-        'Content-Type': 'application/json',
+        'Content-Type': contentType,
         'Authorization': token
+      }
+      if(!needContentType) {
+        headerValue = {'Authorization': token}
       }
     }
     return {
@@ -50,7 +53,7 @@ export class BlogService {
   }
 
   addBlog(blog:any): Observable<any> {
-    const options = this.getStandardOptions(true)
+    const options = this.getStandardOptions(true, false)
     return this.http.post<any>(`${URL}/addBlog`, blog, options).pipe(catchError(this.handleError))
   }
 

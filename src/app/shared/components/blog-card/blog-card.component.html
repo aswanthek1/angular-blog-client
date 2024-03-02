@@ -1,7 +1,14 @@
 <div
-    class="md:w-[300px] w-[280px] bg-[#D9D9D9] h-[180px] rounded-[15px] mx-auto my-[30px] flex flex-col
-    justify-center items-center font-bold font-sans text-gray-600 cursor-pointer"
+    class="md:w-[300px] w-[280px]  h-auto min-h-[210px] 
+    bg-[#D9D9D9] rounded-[15px] mx-auto my-[30px] flex flex-col shadow-lg hover:shadow-2xl hover:transition hover:ease-in
+    justify-center items-center font-bold font-sans text-gray-600 cursor-pointer relative"
     (click)="handleBlogClick(blog._id)"
     >
-    {{blog.tittle}}
+    <img class="absolute z-1 top-0 left-0 w-full h-full rounded-[15px] object-cover" [src]="blog.image" [alt]="blog.tittle">
+    <div class="absolute z-20 bottom-0 h-[30%] w-full px-4 pb-4">
+        <p class=" text-white text-2xl font-semibold">{{blog.tittle.slice(0,15)}}...</p>
+        <p class="z-20 text-white text-sm font-semibold">By: {{blog.author.name}}</p>
+    </div>
+    <div class="absolute z-10 blur-rgba-black top-0 left-0 h-full w-full rounded-[15px]" ></div>
 </div>
+<!-- h-[180px] -->

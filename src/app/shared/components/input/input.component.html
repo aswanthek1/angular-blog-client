@@ -1,10 +1,11 @@
-<div class="flex flex-col gap-2">
+<div [classList]="'flex flex-col gap-2 '+extraContainerClasses">
     <label htmlFor="form-input" class="text-sm font-semibold">{{label}}</label>
     <input 
-      class="py-3 px-4 rounded border-2"
+      [classList]="'py-3 px-4 rounded border-2 '+extraInputClass"
       [required]="required"
       [formControl]="control"
       [type]="type"
+      [placeholder]="placeholder"
     />
  </div>
  <!-- [formControlName]="formControlName" -->

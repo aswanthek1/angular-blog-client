@@ -3,11 +3,12 @@ import { IconComponent } from '../../shared/components/icon/icon.component';
 import { Blogs } from '../../shared/models/blogModel';
 import { ActivatedRoute, ParamMap, Router, RouterModule, RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { GoBackButtonComponent } from '../../shared/components/go-back-button/go-back-button.component';
 
 @Component({
   selector: 'app-view-blog',
   standalone: true,
-  imports: [IconComponent, RouterOutlet, RouterModule, CommonModule],
+  imports: [IconComponent, RouterOutlet, RouterModule, CommonModule, GoBackButtonComponent],
   templateUrl: './view-blog.component.html',
   styleUrl: './view-blog.component.css'
 })
@@ -36,6 +37,9 @@ export class ViewBlogComponent implements OnInit {
     }
   }
 
+  handleButtonClick() {
+    window.scrollTo({top:0, behavior: 'smooth'})
+  }
 
   // getBlogById(id:string) {
   //   this.blogService.getBlogById(id).subscribe({

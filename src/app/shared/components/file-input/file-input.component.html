@@ -1,0 +1,18 @@
+<div class="relative w-fit m-auto">
+    <div class="flex items-center justify-center">
+        <label htmlFor="dropzone-file" [classList]="'flex flex-col items-center justify-center h-40 w-40 md:h-52 md:w-52 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600 px-3 '+extraContainerClasses">
+            <div class="flex flex-col items-center justify-center pt-4 pb-5">
+                <app-file-svg></app-file-svg>
+                <p class="mb-2 text-sm text-center text-gray-500 dark:text-gray-400"><span class="font-semibold">Click to upload</span> or drag and drop</p>
+                <p class="text-xs text-center text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF</p>
+            </div>
+            <input (change)="handleImageChange($event)" id="dropzone-file" type="file" class="hidden" />
+            <img
+                *ngIf="image"
+                [src]="image"
+                alt="image"
+                class="absolute top-0 right-0 w-full h-full"
+            />
+        </label>
+    </div>
+</div>

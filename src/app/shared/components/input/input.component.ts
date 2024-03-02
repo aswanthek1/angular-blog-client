@@ -17,6 +17,8 @@ export class InputComponent{
   @Input() name:string = ''
   @Input() value: string|number = ''
   @Input() required: boolean = false
+  @Input() extraInputClass:string = ''
+  @Input() extraContainerClasses:string = ''
   @Input() control = new FormControl()
   // @Input() formControlName?:FormControlName
 
