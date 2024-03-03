@@ -3,6 +3,9 @@ import { CommonModule } from '@angular/common';
 import { Event, NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router, RouterModule, RouterOutlet } from '@angular/router';
 import { LoaderComponent } from './shared/components/loader/loader.component';
 import { NavBarComponent } from './shared/components/nav-bar/nav-bar.component';
+import { Store } from '@ngrx/store';
+import { AppState } from './states/app.state';
+import { loadAuthor } from './states/author/author.action';
 
 @Component({
   selector: 'app-root',
@@ -12,6 +15,7 @@ import { NavBarComponent } from './shared/components/nav-bar/nav-bar.component';
   styleUrl: './app.component.css'
 })
 export class AppComponent implements OnInit {
+  constructor(private store: Store<AppState>){}
   title = 'blog-client-angular';
   showLoader:boolean = false;
   router:Router = inject(Router)
@@ -29,6 +33,15 @@ export class AppComponent implements OnInit {
         this.router.navigate(['not-found'])
       }
     })
+
+    // for fetching logged in user
+    // console.log(localStorage.getItem('token'), 'tokeng is')
+    const token = localStorage.getItem('token')
+    if(token) {
+      // then fetch logged in user data and set in redux
+      this.store.dispatch(loadAuthor())
+    }
+
   }
 
 }

@@ -8,6 +8,8 @@ import { provideEffects } from '@ngrx/effects';
 import { BlogsEffects } from './states/blogs/blog.effects';
 import { BlogReducer } from './states/blogs/blog.reducer';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { AuthorEffects } from './states/author/author.effects';
+import { AuthorReducer } from './states/author/author.reducer';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -15,6 +17,9 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(), 
     provideStore(),
     provideState({name:'blogs', reducer: BlogReducer}),
-    provideEffects(BlogsEffects), provideAnimationsAsync()
+    provideState({name: 'author', reducer: AuthorReducer}),
+    provideEffects(BlogsEffects),
+    provideEffects(AuthorEffects),
+    provideAnimationsAsync()
   ]
 };

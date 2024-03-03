@@ -7,6 +7,9 @@ import { AuthContainerComponent } from '../../../shared/components/auth-containe
 import { Router, RouterModule } from '@angular/router';
 import { AuthorService } from '../../../core/services/author-service/author.service';
 import { LoaderComponent } from '../../../shared/components/loader/loader.component';
+import { AppState } from '../../../states/app.state';
+import { Store } from '@ngrx/store';
+import { loadAuthorSuccess } from '../../../states/author/author.action';
 
 @Component({
   selector: 'app-login',
@@ -25,6 +28,8 @@ export class LoginComponent {
 
   router: Router = inject(Router)
   authorService: AuthorService = inject(AuthorService)
+  
+  constructor(private store: Store<AppState>){}
 
   onUserSubmitted() {
     if(!this.authorForm.valid) {
@@ -40,6 +45,7 @@ export class LoginComponent {
         alert("Logged in Successfully!")
         console.log(data, ';loggedin')
         localStorage.setItem('token', data?.accessToken)
+        this.store.dispatch(loadAuthorSuccess({data: data?.data}))
         this.router.navigate(['blogs'])
       },
       error:(error) => {

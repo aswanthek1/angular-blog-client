@@ -5,5 +5,6 @@ export class Author {
     proffession?: string;
     company_name?: string;
     image?: string;
-    password?: string
+    password?: string;
+    role:string = '';
 }

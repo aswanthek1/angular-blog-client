@@ -3,8 +3,13 @@
     <a class="decoration-0 font-bold text-4xl hidden md:block" routerLink="">BreifIt</a>
     <app-icon [iconClass]="'bi-person-circle custom-icon-font'" mat-button [matMenuTriggerFor]="menu"></app-icon>
     <mat-menu #menu="matMenu">
-        <button routerLink="/login" mat-menu-item>Login</button>
-        <button (click)="handleLogout()" mat-menu-item>Logout</button>
-        <button mat-menu-item>Profile</button>
+        <ng-container *ngIf="author.isLoggedIn; else showLogout">
+            <button mat-menu-item>{{author.author.name}}</button>
+            <button (click)="handleLogout()" mat-menu-item>Logout</button>
+            <button *ngIf="author.author.role === 'admin'" routerLink="/admin/dashboard" mat-menu-item>Dashboard</button>
+        </ng-container>
+        <ng-template #showLogout>
+            <button routerLink="/login" mat-menu-item>Login</button>
+        </ng-template>
     </mat-menu>
 </div>
