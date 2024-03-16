@@ -10,6 +10,7 @@ import { BlogReducer } from './states/blogs/blog.reducer';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { AuthorEffects } from './states/author/author.effects';
 import { AuthorReducer } from './states/author/author.reducer';
+import { SidebarReducer } from './states/sidebar/sidebar.reducer';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -18,6 +19,7 @@ export const appConfig: ApplicationConfig = {
     provideStore(),
     provideState({name:'blogs', reducer: BlogReducer}),
     provideState({name: 'author', reducer: AuthorReducer}),
+    provideState({name: 'sidebar', reducer: SidebarReducer}),
     provideEffects(BlogsEffects),
     provideEffects(AuthorEffects),
     provideAnimationsAsync()

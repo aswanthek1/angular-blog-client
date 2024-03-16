@@ -1,0 +1,16 @@
+<div [classList]="sectionClasses$">
+    <div class="sidebarContainer">
+        <div class="sidebarHeader">
+            <app-icon [extraClasses]="'px-[5px] py-[2px]'" [iconClass]="'bi-x custom-icon-font'"
+                (buttonClick)="handleSidebar()"></app-icon>
+        </div>
+        <div class="menuContainer">
+            <ul>
+
+                <li class="menuList bg-slate-400 hover:shadow-2xl transition-all cursor-pointer"
+                    *ngFor="let link of adminLinks" [routerLink]="link.path">
+                    {{link.text}}</li>
+            </ul>
+        </div>
+    </div>
+</div>

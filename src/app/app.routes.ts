@@ -7,6 +7,7 @@ import { canActivate,  canActivatePublicRoutes,  resolve } from './core/guards/g
 import { HomeComponent } from './modules/home/home.component';
 import { LoginComponent } from './modules/auth/login/login.component';
 import { RegisterComponent } from './modules/auth/register/register.component';
+import { DashboardComponent } from './modules/admin/dashboard/dashboard.component';
 
 export const routes: Routes = [
     {path:'', title:'Home', component:HomeComponent},
@@ -15,6 +16,9 @@ export const routes: Routes = [
     {path:'blogs', title:'Blogs', component:BlogsComponent},
     {path:'create', title:'Create', component:CreateBlogComponent, canActivate:[canActivate]},
     {path:'blog/:id', title:'Blog', component:ViewBlogComponent, resolve:{blog:resolve}},
+    {path: 'admin', children: [
+        {path: 'dashboard', component: DashboardComponent}
+    ]},
     {path:'not-found', title:'Not-Found', component:NotFoundComponent},
     {path:'**', title:'Not-Found', component:NotFoundComponent},
 ];

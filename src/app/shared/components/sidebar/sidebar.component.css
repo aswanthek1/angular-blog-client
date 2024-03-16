@@ -1,0 +1,70 @@
+.sidebarSection {
+    display: none;
+    opacity: 0;
+}
+
+.open {
+    display: block;
+    width: 200px;
+    opacity: 1;
+    animation-name: openAnimation;
+    animation-duration: 0.8s;
+}
+
+@keyframes openAnimation {
+    from {
+        width:0px;
+        opacity: 0; 
+        display: none;
+    }
+    to {
+        width: 200px;
+        opacity: 1; 
+        display: block;
+    }
+}
+
+.closed {
+    display: none;
+    width: 10px;
+    opacity: 0;
+    animation-name: closedAnimation;
+    animation-duration: 0.8s;
+}
+
+@keyframes closedAnimation {
+    from {
+        width: 200px;
+        opacity: 1; 
+        display: block;
+    }
+    to {
+        width: 10px;
+        opacity: 0; 
+        display: none;
+    }
+}
+
+.sidebarContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.sidebarHeader {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.menuList {
+    list-style: none;
+    font-size: larger;
+    font-weight: 500;
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 10px;
+}
+
+.menuList:first-child {
+    margin-top: 40px;
+}
