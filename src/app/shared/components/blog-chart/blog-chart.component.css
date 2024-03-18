@@ -1,0 +1,10 @@
+.chartCanvas {
+    max-width: 100% !important;
+    height: 400px !important;
+}
+
+@media screen and (max-width:767px) {
+    .chartCanvas {
+        height: 200px !important;
+    }
+}

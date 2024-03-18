@@ -4,6 +4,7 @@ import {  ActivatedRouteSnapshot, CanActivateFn, ResolveFn, Router, RouterStateS
 import { Blogs } from "../../shared/models/blogModel";
 import { Observable, catchError, map, of } from "rxjs";
 import { AuthorService } from "../services/author-service/author.service";
+import { AdminServiceService } from "../services/admin-service/admin-service.service";
 
 
 export const canActivate: CanActivateFn = (route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> => {
@@ -59,3 +60,8 @@ export const resolve:ResolveFn<Blogs> = (route:ActivatedRouteSnapshot, state:Rou
     const id:string = route.paramMap.get('id') as string;
     return blogService.getBlogById(id)
   }
+
+export const resolveChart: ResolveFn<any> = (route:ActivatedRouteSnapshot, state:RouterStateSnapshot): any => {
+    const adminService:AdminServiceService = inject(AdminServiceService);
+    return adminService.getChartDetails();
+}

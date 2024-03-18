@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 import { selectSidebar } from '../../../states/sidebar/sidebar.selector';
 import { SidebarState } from '../../../states/sidebar/sidebar.reducer';
 import { adminSidebarLinks } from '../../../../constants/constants';
-import { RouterModule } from '@angular/router';
+import { NavigationStart, Route, Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-sidebar',
@@ -19,16 +19,25 @@ import { RouterModule } from '@angular/router';
 })
 export class SidebarComponent implements OnInit {
   @Input() isOpen:boolean = false
-  constructor(private store: Store<AppState>){}
+  constructor(private store: Store<AppState>, private router: Router){}
   sidebar$:Observable<SidebarState> = this.store.select(selectSidebar)
   sectionClasses$:string = ''
   adminLinks = adminSidebarLinks;
+  sidebarData!:SidebarState
   ngOnInit(): void {
     this.sidebar$.subscribe({
       next:(data) => {
         this.sectionClasses$ = data.classes
+        this.sidebarData = data
       }
     })
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationStart) {
+        if(this.sidebarData?.isOpen) {
+          this.handleSidebar()
+        }
+      }
+    });
   }
   handleSidebar() {
     this.store.dispatch(toggleSideBar())
