@@ -9,6 +9,7 @@ import { LoginComponent } from './modules/auth/login/login.component';
 import { RegisterComponent } from './modules/auth/register/register.component';
 import { DashboardComponent } from './modules/admin/dashboard/dashboard.component';
 import { UsersComponent } from './modules/admin/users/users.component';
+import { BlogManagementComponent } from './modules/admin/blog-management/blog-management.component';
 
 export const routes: Routes = [
     {path:'', title:'Home', component:HomeComponent},
@@ -16,10 +17,14 @@ export const routes: Routes = [
     {path:'register', title:'Signup', component:RegisterComponent, canActivate:[canActivatePublicRoutes]},
     {path:'blogs', title:'Blogs', component:BlogsComponent},
     {path:'create', title:'Create', component:CreateBlogComponent, canActivate:[canActivate]},
-    {path:'blog/:id', title:'Blog', component:ViewBlogComponent, resolve:{blog:resolve}},
+    {path: 'blog', children: [
+        {path:':id', title:'Blog', component:ViewBlogComponent, resolve:{blog:resolve}},
+        {path:'edit/:id', title: 'Edit Blog', component: CreateBlogComponent, canActivate:[canActivate], resolve: {blog: resolve}}
+    ]},
     {path: 'admin', canActivateChild:[canActivate], children: [
         {path: 'dashboard', component: DashboardComponent, resolve: {chartDetails:resolveChart}},
         {path: 'users', component: UsersComponent},
+        {path: 'blogs', component: BlogManagementComponent},
     ]},
     {path:'not-found', title:'Not-Found', component:NotFoundComponent},
     {path:'**', title:'Not-Found', component:NotFoundComponent},

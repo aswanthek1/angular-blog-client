@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { API_BASE_URL } from '../../base-url/base-url';
 import { Observable, catchError, of } from 'rxjs';
@@ -45,4 +45,16 @@ export class AdminServiceService {
     const options = this.getStandardOptions(true)
     return this.http.get(`${URL}/get-chart-data`, options).pipe(catchError(this.handleError))
   }
+
+  getAllAuthors(page:number, limit:number): Observable<any> {
+    let options = this.getStandardOptions(true)
+    options.params = new HttpParams({///for adding query params
+      fromObject: {
+        limit: limit,
+        page:page
+      }
+    })
+    return this.http.get(`${URL}/get-users`, options).pipe(catchError(this.handleError))
+  }
+  
 }

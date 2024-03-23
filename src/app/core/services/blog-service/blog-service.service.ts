@@ -37,9 +37,8 @@ export class BlogService {
     else {
       console.error('Server side error: ', error.error)
     }
-
-    // return throwError(() => new Error('Cannot retriev blogs. Please try again'))
-    return of(error);
+    return throwError(() => error)
+    // return of(error);
   }
 
   getBlogs(page:number, limit:number) : Observable<any> {
@@ -59,5 +58,10 @@ export class BlogService {
 
   getBlogById(id:string){
     return this.http.get<Blogs>(`${URL}/getBlog/${id}`).pipe(catchError(this.handleError))
+  }
+
+  updateBlog(blog:any, id:string): Observable<any> {
+    const options = this.getStandardOptions(true, false)
+    return this.http.put<any>(`${URL}/edit/${id}`, blog, options).pipe(catchError(this.handleError))
   }
 }

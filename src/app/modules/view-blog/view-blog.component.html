@@ -1,8 +1,12 @@
 <div class="flex md:flex-row flex-col mt-7 px-3 md:px-14 py-6 gap-9">
     <div
-        class="fixed cursor-pointer"
+        class="fixed cursor-pointer flex flex-col gap-2"
         >
         <app-go-back-button></app-go-back-button>
+        <app-icon
+         [routerLink]="'/blog/edit/'+blog._id"
+         *ngIf="author.author._id === blog.author._id" 
+         [iconClass]="'bi-pencil-square'" class="cursor-pointer"></app-icon>
     </div>
     <div class="flex flex-col gap-16 px-6 md:px-36 w-full ">
         <h1 *ngIf="blog?.tittle" class="text-center text-4xl font-bold text-red-400 ">

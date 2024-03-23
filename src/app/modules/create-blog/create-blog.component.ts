@@ -1,10 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { IconComponent } from '../../shared/components/icon/icon.component';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { BlogService } from '../../core/services/blog-service/blog-service.service';
 import { Blogs } from '../../shared/models/blogModel';
-import { RouterModule, RouterOutlet } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule, RouterOutlet } from '@angular/router';
 import { LoaderComponent } from '../../shared/components/loader/loader.component';
 import { InputComponent } from '../../shared/components/input/input.component';
 import { FileInputComponent } from '../../shared/components/file-input/file-input.component';
@@ -22,9 +22,20 @@ import { GoBackButtonComponent } from '../../shared/components/go-back-button/go
   templateUrl: './create-blog.component.html',
   styleUrl: './create-blog.component.css'
 })
-export class CreateBlogComponent {
+export class CreateBlogComponent implements OnInit {
 
-  constructor(private blogService:BlogService) {}
+  constructor(private blogService:BlogService, private route: ActivatedRoute, private router: Router) {}
+  text:string = 'Create Blog'
+  id:string | null = null
+  ngOnInit(): void {
+    if(this.route.snapshot.params['id']) {
+      this.getBlogBeforeLoading()
+      this.id = this.route.snapshot.params['id']
+      if(this.id) {
+        this.text = 'Update Blog'
+      }
+    }
+  }
   blogForm = new FormGroup({
     tittle: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(30)]),
     content: new FormControl('', [Validators.required, Validators.minLength(10)]),
@@ -54,7 +65,7 @@ export class CreateBlogComponent {
       alert('Content is required and need minimum 10 chars')
       return;
     }
-    if(this.blogForm.get('image')?.hasError('required')) {
+    if(!this.id && !this.previewImage && this.blogForm.get('image')?.hasError('required')) {
       alert('An Image is required.')
       return;
     }
@@ -62,28 +73,61 @@ export class CreateBlogComponent {
     //   alert('Author is required and need minimum 2 chars')
     //   return;
     // }
-    if(this.blogForm.valid) {
+    const formDataObj = new FormData();
+    formData?.tittle && formDataObj.append('tittle', formData.tittle);
+    formData?.content && formDataObj.append('content', formData.content);
+    formData?.image && formDataObj.append('image', formData.image);
+    if(this.id) {
       this.loading = true;
-      const formDataObj = new FormData();
-      formData?.tittle && formDataObj.append('tittle', formData.tittle);
-      formData?.content && formDataObj.append('content', formData.content);
-      formData?.image && formDataObj.append('image', formData.image);
-      this.blogService.addBlog(formDataObj).subscribe({
-        next:(data:any) => {
-          this.blogForm.setValue({tittle:'', content:'', image:null})
-          this.previewImage = ''
-          this.loading = false;
-          alert('Blog Added Successfully!')
-        },
-        error:(error:any) => {
-          this.loading = false;
-          alert(error.message)
-        },
-        complete:() => {
-          this.loading = false
-        }
-      })
+      this.updateBlog(formDataObj)
     }
+    else if(this.blogForm.valid) {
+      this.loading = true;
+      this.createBlog(formDataObj)
+    }
+  }
+
+  createBlog(formDataObj: FormData) {
+    this.blogService.addBlog(formDataObj).subscribe({
+      next:(data:any) => {
+        this.blogForm.setValue({tittle:'', content:'', image:null})
+        this.previewImage = ''
+        this.loading = false;
+        alert('Blog Added Successfully!')
+      },
+      error:(error:any) => {
+        this.loading = false;
+        alert(error.message)
+      },
+      complete:() => {
+        this.loading = false
+      }
+    })
+  }
+
+  //for editing
+  getBlogBeforeLoading() {
+    const items = this.route.snapshot.data['blog']
+    if(!items && !this.route.snapshot.params['id']) {
+      this.router.navigate(['not-found'])
+    }
+    else {
+      this.blogForm.patchValue({tittle: items.tittle, content: items.content})
+      this.previewImage = items.image
+    }
+  }
+
+  updateBlog(formData:FormData) {
+    this.blogService.updateBlog(formData, this.id as string).subscribe({
+      next:(data) => {
+        alert("Blog updated successfully!")
+        this.loading = false;
+      },
+      error:(error) => {
+        alert(error?.error?.message || 'Something went wrong.')
+        this.loading = false;
+      }
+    })
   }
 
 }

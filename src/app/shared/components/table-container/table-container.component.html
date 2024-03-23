@@ -1,4 +1,10 @@
-<div class="px-[1px] py-4 md:px-[210px] md:py-7" >
-    <h1 class="text-xl font-semibold text-center mt-5 mb-4" >{{pageHeading}}</h1>
-    <ng-content></ng-content>
-</div>
+<app-loader *ngIf="loading; else showPage"></app-loader>
+
+<ng-template #showPage>    
+    <div class="px-[20px] py-4 md:px-[100px] lg:px-[210px] md:py-7">
+        <h1 class="text-2xl font-semibold text-center mt-5 mb-6 underline">{{pageHeading}}</h1>
+        <div class="overflow-x-auto rounded-xl shadow-xl">
+            <ng-content></ng-content>
+        </div>
+    </div>
+</ng-template>

@@ -1,30 +1,58 @@
-import { Component } from '@angular/core';
-import {MatTableModule} from '@angular/material/table';
-import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import {MatTableDataSource, MatTableModule} from '@angular/material/table';
+import {MatPaginator, MatPaginatorModule, PageEvent} from '@angular/material/paginator';
 import { TableContainerComponent } from '../../../shared/components/table-container/table-container.component';
-
-const ELEMENT_DATA: any[] = [
-  {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
-  {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
-  {position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li'},
-  {position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be'},
-  {position: 5, name: 'Boron', weight: 10.811, symbol: 'B'},
-  {position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C'},
-  {position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N'},
-  {position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O'},
-  {position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F'},
-  {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
-];
+import { AdminServiceService } from '../../../core/services/admin-service/admin-service.service';
+import { Author } from '../../../shared/models/authorModel';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-users',
   standalone: true,
-  imports: [MatTableModule, MatPaginator, MatPaginatorModule, TableContainerComponent],
+  imports: [MatTableModule, MatPaginator, MatPaginatorModule, TableContainerComponent, CommonModule],
   templateUrl: './users.component.html',
   styleUrl: './users.component.css'
 })
 
-export class UsersComponent {
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
-  dataSource = ELEMENT_DATA;
+export class UsersComponent implements OnInit, AfterViewInit {
+
+  constructor(private adminService: AdminServiceService){}
+
+  displayedColumns: string[] = ['name', 'email', 'role'];
+  dataSource = new MatTableDataSource<Author[]>();
+  loading:boolean = false;
+  page:number = 1;
+  limit:number = 5;
+
+  ngOnInit(): void {
+    this.getUsers()
+  }
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+
+  ngAfterViewInit():void {
+    this.dataSource.paginator = this.paginator;
+  }
+
+  getUsers(page=this.page, limit=this.limit) {
+    this.loading = true;
+    this.adminService.getAllAuthors( page, limit).subscribe({
+      next:(data: any) => {
+        this.dataSource = data.data
+        // this.displayedColumns = ['name', 'email', 'role']
+        this.paginator.length = data.count
+      },
+      error: (error) => {
+        alert("Something went wrong!")
+      },
+      complete: () => {
+        this.loading = false;
+      },
+    })
+  }
+
+  onPageChange(event: PageEvent) {
+    this.getUsers(event.pageIndex+1, event.pageSize)
+  }
+
 }
